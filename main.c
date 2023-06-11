@@ -15,8 +15,8 @@
     char *zErrMsg = 0;
     int rc;
   
-    if( argc!=3 ){
-      fprintf(stderr, "Usage: %s DATABASE SQL-STATEMENT\n", argv[0]);
+    if( argc!=2 ){
+      fprintf(stderr, "Usage: %s DATABASE \n", argv[0]);
       return(1);
     }
     rc = sqlite3_open(argv[1], &db);
@@ -25,11 +25,32 @@
       sqlite3_close(db);
       return(1);
     }
-    rc = sqlite3_exec(db, argv[2], callback, 0, &zErrMsg);
+
+    /* Create Table */
+    char * cmd = "CREATE TABLE KVStore ( key int, val int)";
+    rc = sqlite3_exec(db, cmd, callback, 0, &zErrMsg);
     if( rc!=SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
     }
+
+    /* Insert value */
+    cmd = "INSERT INTO KVStore (key, val) VALUES (1, 4)";
+    rc = sqlite3_exec(db, cmd, callback, 0, &zErrMsg);
+    if( rc!=SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+    }
+
+
+    /* Drop Table */
+    cmd = "DROP TABLE KVStore";
+    rc = sqlite3_exec(db, cmd, callback, 0, &zErrMsg);
+    if( rc!=SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+    }
+
     sqlite3_close(db);
     return 0;
   }
