@@ -66,3 +66,4 @@ strncmp
 strrchr
 __tunable_get_val
 ```
+| lines with the prefix `sqlite3` are sqlite3 lib calls and not libc calls.
