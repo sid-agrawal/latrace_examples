@@ -1,7 +1,17 @@
-example: *.c *.h
-	gcc main.c sqlite3.c -o example
+#app-static: *.c 
+#	gcc main.c -Wl,-Bstatic -lsqlite3 -o app-static
 
-run: example
-	./example foo.db
+app: *.c 
+	gcc main.c -lsqlite3 -o app
+
+run: app
+	./app foo.db
+
+latrace-log: app
+	latrace ./app foo.db > latrace_app.log
+
+show-libc-calls: latrace-log
+	cat latrace_app.log | awk '{print $$2}' | sort | uniq
+
 clean: 
-	rm example foo.db
+	rm app foo.db latrace_app.log

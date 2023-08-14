@@ -1,2 +1,4 @@
-example
 foo.db
+app  
+latrace_app.log  
+latrace_sqlite.log  
