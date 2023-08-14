@@ -1,4 +1,9 @@
-# Finding out a subset of libc calls needed for SQLite
+# Finding out a subset of libc calls needed for different apps.
+
+Apps Explored:
+* SQLite
+
+## SQLite
 This extremely trivial SQLite application:
 - Opens a SQLite DB handle
 - Creates a table 
